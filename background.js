@@ -14,7 +14,7 @@ chrome.windows.onCreated.addListener(function() {
 
 // get the total number of "safe" sites that user has chosen
 // google homepage is the default site
-function get_num_of_site(){
+function get_num_of_sites(){
   return chrome.storage.sync.get('num_of_sites', function(err, num) {
     if(err){
       chrome.storage.sync.set({'num_of_sites':1})
