@@ -5,7 +5,8 @@
   "default_locale": "en",
   "description": "Quickly change tabs to a page of your choosing.",
   "permissions": [
-          "tabs"
+          "tabs", 
+          "storage"
         ],
   "background": {
   "scripts": ["background.js"]
