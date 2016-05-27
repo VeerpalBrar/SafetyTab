@@ -26,8 +26,8 @@ function get_num_of_sites(){
 // given the total number of site, get the url for one site randomly
 // google homepage is default
 function get_site_url(num_of_sites){
-  site_number = Math.floor(Math.random() * num_of_sites);
-  site_key = "site_"+site_number.toString()
+  var site_number = Math.floor(Math.random() * num_of_sites);
+  var site_key = "site_"+site_number.toString()
   chrome.storage.sync.get(site_key, function(err, site_url) {
     if(err)return "https//www.google.ca"
       return site_url
@@ -35,6 +35,6 @@ function get_site_url(num_of_sites){
 }
 
 function store_url(){
-  num = get_num_of_sites()
+  var num = get_num_of_sites()
   chrome.storage.sync.set({'site_url':get_site_url(num)})
 }
