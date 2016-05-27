@@ -12,6 +12,14 @@ chrome.windows.onCreated.addListener(function() {
     store_url();
 })
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) 
+    if (request.add_site){
+     store_url(request.add_site)
+     sendResponse({action_taken: "added"});
+  }
+  
+});
+
 // get the total number of "safe" sites that user has chosen
 // google homepage is the default site
 function get_num_of_sites(){
