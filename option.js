@@ -23,7 +23,8 @@ function get_urls(){
     for(var i = 0; i < all_values.length;i++){
       var newsite = document.createElement('li');
       newsite.setAttribute('class',"site");
-      newdiv.innerHTML = all_values[i]
+      newsite.innerHTML = all_values[i]
+      $( ".sites" ).append( newsite );
     }
   })
 }
