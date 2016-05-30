@@ -27,3 +27,5 @@ function get_urls(){
     }
   })
 }
+
+document.addEventListener('DOMContentLoaded', get_urls);
