@@ -11,3 +11,19 @@ function add_site(){
     }
   });
 }
+
+function check_url_valid(url){
+  if(url.charAt(0) == "h") return true
+  return false
+}
+
+function get_urls(){
+  chrome.storage.sync.get(null, function(items){
+    var all_values = Object.values(items)
+    for(var i = 0; i < all_values.length;i++){
+      var newsite = document.createElement('li');
+      newsite.setAttribute('class',"site");
+      newdiv.innerHTML = all_values[i]
+    }
+  })
+}
