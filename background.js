@@ -21,7 +21,6 @@ chrome.windows.onCreated.addListener(function() {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-	StorageArea.clear()
     if (request.add_site) {
         chrome.storage.sync.set({
 				'site_url': request.add_site
