@@ -40,8 +40,10 @@ chrome.runtime.onInstalled.addListener(function(details) {
     default_site['site_2'] = "https://stackoverflow.com";
     default_site['site_3'] = "https://wired.com";
     default_site['site_4'] = "https://github.com";
-    chrome.storage.local.set(default_site, function() {
-        store_url()
+    chrome.storage.sync.set(default_site, function() {
+		chrome.storage.sync.set({'num_of_sites':4}, function(){
+			store_url()
+		})
     })
 });
 // get the total number of "safe" sites that user has chosen
@@ -74,7 +76,6 @@ function get_site_url(num_of_sites) {
     chrome.storage.sync.get(get_item, function(result) {
         var keys = Object.keys(result);
         var key = keys[0];
-        console.debug(key + ' = ' + result[key]);
         if (!result) {
             chrome.storage.sync.set({
                 'site_url': "https://google.ca"
