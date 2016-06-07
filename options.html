@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="jquery-1.12.2.min.js"></script>
+   <script src="jquery-2.2.4.min.js"></script>
   <title>SafetyTab Options</title>
   <style>
     body: { padding: 10px; }
@@ -12,14 +12,14 @@
   <form>
   Add site:<br>
   <input type="text" name="site_name" placeholder="http://www.google.ca"><br>
-  <input type="submit" value="Submit" onclick="add_site()">
+  <input id="save" type="submit" value="Submit">
 </form>
 
 <p>Your Safety Tabs:</p>
-<ul class="sites">
-  <li></li>
+<ul class="sites" id="site_list">
 </ul>
 
-  <script src="options.js"></script>
+  <script src="option.js"></script>
 </body>
 </html>
+
