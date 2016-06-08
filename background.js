@@ -21,25 +21,33 @@ chrome.windows.onCreated.addListener(function() {
     store_url();
 })
 
+//
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-
     if (request.add_site) {
-        chrome.storage.sync.set({
-            'site_url': request.add_site
-        })
-        sendResponse({
-            action_taken: "added"
-        });
-    }
-
-});
+		get_num_of_sites(function(num){
+			var site_key = "site_" + (num+1).toString()
+			var message ={}
+			message[site_key] = request.add_site
+			chrome.storage.sync.set(message, function(){
+				chrome.storage.sync.set({'num_of_sites':num+1},function(){
+					sendResponse({action_taken: "added"});
+				});
+				return true;
+			});
+			return true;
+		});
+		return true;
+	}
+}); 
 
 chrome.runtime.onInstalled.addListener(function(details) {
-    var default_site = {}
+    chrome.storage.sync.clear()
+	var default_site = {}
     default_site['site_1'] = "https://google.ca";
     default_site['site_2'] = "https://stackoverflow.com";
     default_site['site_3'] = "https://wired.com";
     default_site['site_4'] = "https://github.com";
+
     chrome.storage.sync.set(default_site, function() {
 		chrome.storage.sync.set({'num_of_sites':4}, function(){
 			store_url()
@@ -51,7 +59,6 @@ chrome.runtime.onInstalled.addListener(function(details) {
 function get_num_of_sites(callback) {
     chrome.storage.sync.get('num_of_sites', function(num) {
         if (!num) {
-            console.log("ehllo")
             chrome.storage.sync.set({
                 'num_of_sites': 1
             })
@@ -71,11 +78,13 @@ function get_num_of_sites(callback) {
 function get_site_url(num_of_sites) {
     var site_number = Math.floor(Math.random() * num_of_sites) + 1;
     var site_key = "site_" + site_number.toString()
+	console.log(site_key)
     var get_item = []
     get_item.push(site_key)
     chrome.storage.sync.get(get_item, function(result) {
         var keys = Object.keys(result);
         var key = keys[0];
+		console.log(key)
         if (!result) {
             chrome.storage.sync.set({
                 'site_url': "https://google.ca"
@@ -89,6 +98,6 @@ function get_site_url(num_of_sites) {
     });
 };
 
-function store_url(url) {
+function store_url() {
     get_num_of_sites(get_site_url)
 };
