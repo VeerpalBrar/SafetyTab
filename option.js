@@ -10,7 +10,7 @@ function add_site(){
   chrome.runtime.sendMessage({add_site: site_url}, function(response) {
     if(response.action_taken == "added"){
 	  remove_children('site_list')
-	  get_urls();
+	  get_urls(add_button_listeners);
     }
   });
 }
@@ -21,18 +21,23 @@ function check_url_valid(url){
   return false
 }
 
-function get_urls(){
+function get_urls(callback){
   chrome.storage.sync.get(null, function(items){
     var all_values = Object.keys(items)
 	console.log(all_values)
     for(var i = 0; i < all_values.length;i++){
 		if(all_values[i]!= 'num_of_sites' && all_values[i]!= 'site_url'){
-		  var newsite = document.createElement('li');
+			$( "#site_list" ).append("<li><button class='delete' id='"+all_values[i]+"'><b>X</b></button>"+ items[all_values[i]]+"</li>")
+		 /*  var newsite = document.createElement('li');
 		  newsite.setAttribute('class',"site");
 		  newsite.appendChild(document.createTextNode(items[all_values[i]]))
-		  $( ".sites" ).append( newsite );
+		  $( ".sites" ).append( newsite ); */
 		}
 	}
+	if(callback){
+		callback()
+	}
+	
   })
 }
 
@@ -42,10 +47,27 @@ function remove_children(element_id){
 		myNode.removeChild(myNode.firstChild);
 	}
 }
+
+function remove_site(){
+	key = this.id
+	console.log(key)
+	removeItems =[]
+	removeItems.push(key)
+	chrome.storage.sync.remove(removeItems, function(){
+		console.log("hi")
+		remove_children('site_list');
+		get_urls(add_button_listeners);
+	});
+}
+
+function add_button_listeners(){
+	var del_buttons = document.querySelectorAll('.delete');
+	for(i=0;i<del_buttons.length;i++){
+		console.log(i)
+		del_buttons[i].addEventListener('click', remove_site)
+	}
+}
 document.addEventListener("DOMContentLoaded", function(){
-	get_urls();
-	document.getElementById('save').addEventListener('click',function(){
-		console.log(1)
-		add_site();
-	});	
+	get_urls(add_button_listeners);
+	document.getElementById('save').addEventListener('click',add_site);
 });
