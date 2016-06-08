@@ -7,9 +7,8 @@ function add_site(){
     alert("Sorry, that is not a valid website!")
     return
   }
-  chrome.runtime.sendMessage({"add_site": site_url}, function(response) {
+  chrome.runtime.sendMessage({add_site: site_url}, function(response) {
     if(response.action_taken == "added"){
-      alert("Added!");
 	  remove_children('site_list')
 	  get_urls();
     }
@@ -43,7 +42,10 @@ function remove_children(element_id){
 		myNode.removeChild(myNode.firstChild);
 	}
 }
-window.addEventListener("load", get_urls);
-document.getElementById('save').addEventListener('click',
-    add_site);
-
+document.addEventListener("DOMContentLoaded", function(){
+	get_urls();
+	document.getElementById('save').addEventListener('click',function(){
+		console.log(1)
+		add_site();
+	});	
+});
