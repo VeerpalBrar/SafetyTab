@@ -4,22 +4,50 @@
    <script src="jquery-2.2.4.min.js"></script>
   <title>SafetyTab Options</title>
   <style>
-    body: { padding: 10px; }
+    body { 
+		padding: 10px;
+	}
+	li {
+		list-style-type:none;
+		padding-top:10px;
+	}
+	.delete {
+		width:20px;
+		height:20px;
+		line-height:15px;
+		border-radius: 50%;
+		color:white;
+		text-align:center;
+		text-decoration:none;
+		background:#ff9999;
+		font-size:10px;
+		margin-right:10px;
+	}
+	.delete:hover {
+		background: #262626;
+	}
+	#error {
+		color:red;
+	}
+
+
   </style>
 </head>
 
 <body>
+	<p>Add a site to your list of safety tabs below. For best results, copy/paste the desired page URL from the address bar. If you enter an invalid URL, it will automatically redirect to a new tab page.</p>
   <form>
-  Add site:<br>
-  <input type="text" name="site_name" placeholder="http://www.google.ca"><br>
-  <input id="save" type="submit" value="Submit">
-</form>
+  site URL: 
+  <input type="text" id="site_name" placeholder="http://www.google.ca"><br>
+  </form>
+  <p id="error"></p>
+  <button id="save">Add Site</button>
 
 <p>Your Safety Tabs:</p>
+<p id="js_error"></p>
 <ul class="sites" id="site_list">
 </ul>
 
   <script src="option.js"></script>
 </body>
 </html>
-
