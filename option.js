@@ -90,4 +90,10 @@ function add_button_listeners() {
 document.addEventListener("DOMContentLoaded", function() {
     get_urls(add_button_listeners);
     document.getElementById('save').addEventListener('click', add_site);
+	$("#site_name").keypress(function(event){
+		if(event.keyCode == 13){
+			event.preventDefault();
+			$("#save").click();
+		}
+	});
 });
